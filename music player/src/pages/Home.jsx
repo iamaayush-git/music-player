@@ -6,8 +6,12 @@ const Home = () => {
   return (
     <div className="w-[90vw] mx-auto">
       <Navbar />
-      <div className="flex items-center justify-left gap-5 flex-wrap mb-[40vh]">
-        <MusicCard/>
+      <div className="w-full object-center overflow-x-hidden grid grid-cols-1 md:grid-cols-3">
+        <MusicCard />
+        <MusicCard />
+        <MusicCard />
+        <MusicCard />
+        <MusicCard />
       </div>
       <Player />
     </div>
