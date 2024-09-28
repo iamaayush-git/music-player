@@ -14,12 +14,19 @@ const MainSection = () => {
   useEffect(() => {
     getData();
   }, []);
-console.log(songs);
-
+  console.log(songs);
+  
   return (
     <div className="w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 justify-items-center mb-20">
-      {songs.map((items,i)=>{
-        return <MusicCard key={i} image={items.images[0].url} name={items.name} artist={items.artists[0].name}/>
+      {songs.map((items, i) => {
+        return (
+          <MusicCard
+            key={i}
+            image={items.images[0].url}
+            name={items.name}
+            artist={items.artists[0].name}
+          />
+        );
       })}
     </div>
   );
