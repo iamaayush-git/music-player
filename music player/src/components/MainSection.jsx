@@ -9,13 +9,12 @@ const MainSection = () => {
     )
       .then((response) => response.json())
       .then((data) => setSongs(data.albums.items))
-      .catch((error) => console.log(error));
+      .catch((error) =>0);
   }
   useEffect(() => {
     getData();
   }, []);
-  console.log(songs);
-  
+if(songs.length>0){
   return (
     <div className="w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 justify-items-center mb-20">
       {songs.map((items, i) => {
@@ -30,6 +29,14 @@ const MainSection = () => {
       })}
     </div>
   );
-};
+}
+else{
+  return(
+    <div className="w-full mx-auto text-center mt-16 md:mt-20 lg:mt-28 md:text-3xl text-2xl font-bold text-green-600">
+      <p>Loading..</p>
+    </div>
+  )
+}
+}
 
 export default MainSection;

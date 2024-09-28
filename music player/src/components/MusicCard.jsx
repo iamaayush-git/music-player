@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+
 const MusicCard = ({ image, name, artist }) => {
   return (
-    <div className="h-60 w-52 shadow-lg rounded-lg text-center mt-14 cursor-pointer flex flex-col items-center justify-start gap-5 pb-5 overflow-hidden">
+    <Link to={"album/id"} >
+      <div className="h-60 w-52 shadow-lg rounded-lg text-center mt-14 cursor-pointer flex flex-col items-center justify-start gap-5 pb-5 overflow-hidden">
       <img src={image} alt="" className="w-full h-[60%] object-cover" />
       <div className="w-full">
         <p className="w-full text-left font-semibold text-lg pl-4 text-nowrap">
@@ -14,6 +16,7 @@ const MusicCard = ({ image, name, artist }) => {
         </p>
       </div>
     </div>
+    </Link>
   );
 };
 
