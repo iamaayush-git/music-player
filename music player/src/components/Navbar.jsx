@@ -1,8 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import musicLogo from "../assets/musicLogo.jpg";
 import { Link } from "react-router-dom";
-
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { setFilterSongs } from "../features/filterSlice";
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const songs = useSelector((state) => state.songs.list);
+
+  function handleSearch(e) {
+    let query = e.target.value;
+    let filteredSongs;
+    if (query.length > 0) {
+      filteredSongs = songs.filter((song, i) => {
+        return (
+          song.album.title.toLowerCase().includes(query.toLowerCase()) ||
+          song.artist.name.toLowerCase().includes(query.toLowerCase())
+        );
+      });
+    }
+    dispatch(setFilterSongs(filteredSongs));
+    console.log(query);
+  }
+
   return (
     <nav className="flex flex-col mt-5 items-center justify-center lg:flex-row lg:gap-4">
       {/* Left section with logo and menu */}
@@ -34,13 +54,12 @@ const Navbar = () => {
         <input
           className="px-3 w-full border-2 rounded-lg h-10"
           type="text"
-          placeholder="Search for songs, artist, playlist, podcasts"
+          placeholder="Search for songs, artist"
+          onChange={handleSearch}
         />
       </div>
 
-      {/* Right section with language selector, login, and sign-up */}
       <div className="flex items-center justify-center flex-col gap-2 lg:flex-row text-nowrap">
-        {/* Language Selector */}
         <div className="flex items-center justify-center gap-2">
           <div>
             <h2 className="text-sm sm:text-md font-bold">Music Languages</h2>
@@ -48,10 +67,10 @@ const Navbar = () => {
               English
             </p>
           </div>
-          <span className="text-lg sm:text-xl font-semibold cursor-pointer">^</span>
+          <span className="text-lg sm:text-xl font-semibold cursor-pointer">
+            ^
+          </span>
         </div>
-
-        {/* Login and Sign Up */}
         <div className="text-sm sm:text-md font-semibold text-slate-600 cursor-pointer">
           Login
         </div>

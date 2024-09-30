@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 const MusicCard = ({
@@ -10,16 +10,14 @@ const MusicCard = ({
   index,
   currentSong,
   setCurrentSong,
-  audioRefs
+  audioRefs,
 }) => {
   function handleplay() {
-    if (currentSong != null && currentSong !== index) {      
+    if (currentSong != null && currentSong !== index) {
       audioRefs.current[currentSong].pause();
     }
     setCurrentSong(index);
-    
   }
-  console.log(audioRefs.current);
   return (
     <Link to={`/album/${albumId}`}>
       <div className="h-72 w-auto shadow-lg rounded-lg text-center mt-14 cursor-pointer flex flex-col items-center justify-center gap-5 pb-5 overflow-hidden">
