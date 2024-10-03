@@ -1,8 +1,8 @@
-// filteredSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  filteredSongs: [], // Initialize with an empty array
+  filteredSongs: [],
+  searchStatus : false
 };
 
 const filteredSlice = createSlice({
@@ -10,10 +10,13 @@ const filteredSlice = createSlice({
   initialState,
   reducers: {
     setFilterSongs: (state, action) => {
-      state.filteredSongs = action.payload; // Update filteredSongs based on search
+      state.filteredSongs = action.payload;
     },
+    setSearchStatus:(state, action)=>{
+      state.searchStatus = action.payload;
+    }
   },
 });
 
-export const { setFilterSongs } = filteredSlice.actions;
+export const { setFilterSongs,setSearchStatus } = filteredSlice.actions;
 export default filteredSlice.reducer;
