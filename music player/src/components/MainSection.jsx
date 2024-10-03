@@ -11,7 +11,6 @@ const MainSection = () => {
   const songs = useSelector((state) => state.songs.list);
   const filteredSongs = useSelector((state) => state.filterSongs.filteredSongs);
   const searchStatus = useSelector((state) => state.filterSongs.searchStatus);
-  console.log(searchStatus);
 
   function getData() {
     fetch(
@@ -84,6 +83,6 @@ const MainSection = () => {
       ))}
     </div>
   );
-};
+};  
 
 export default MainSection;

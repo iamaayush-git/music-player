@@ -19,7 +19,7 @@ const MusicCard = ({
     setCurrentSong(index);
   }
   return (
-    <Link to={`/album/${albumId}`}>
+    <Link to={`/album/${albumId}/${index}`}>
       <div className="h-72 w-auto shadow-lg rounded-lg text-center mt-14 cursor-pointer flex flex-col items-center justify-center gap-5 pb-5 overflow-hidden">
         <img src={image} alt="" className="w-full h-[60%] object-cover" />
 
