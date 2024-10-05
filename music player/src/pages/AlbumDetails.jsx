@@ -1,16 +1,13 @@
 import React from "react";
 import Player from "../components/Player";
-import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-// Task for tommorrow is to remove album id and use index for identifying the songs and store the index into store
 const AlbumDetails = () => {
   const songs = useSelector((state) => state.songs.list);
-  const albumId = useParams().id;
-  const selectedSong = songs.find((item) => item.album.id == albumId);
-
+  const index = useSelector((state) => state.songs.index);
+  const selectedSong = songs[index];
   if (!selectedSong) {
-    return <div>Album not found</div>;
+    return <div>Songs not found</div>;
   }
 
   return (
@@ -32,7 +29,7 @@ const AlbumDetails = () => {
         </div>
       </div>
       <div className="mt-8 w-full lg:max-w-4xl">
-        <Player selectedSong={selectedSong} />
+        <Player />
       </div>
     </div>
   );

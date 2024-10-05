@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaPlay } from "react-icons/fa";
 import { FaPause } from "react-icons/fa";
 import { IoPlaySkipBackSharp } from "react-icons/io5";
@@ -8,40 +8,49 @@ import { FaVolumeHigh } from "react-icons/fa6";
 import VolumeController from "./VolumeController";
 import musicGifStop from "../assets/musicGifStop.png";
 import musicGif from "../assets/musicGif.webp";
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setIndex } from "../features/songSlice";
 
-const Player = ({ selectedSong }) => {
-  console.log(selectedSong);
+const Player = () => {
   let audioRef = useRef();
+  const dispatch = useDispatch();
   const [showVolumeController, setShowVolumeController] = useState(false);
   const [isPlay, setIsPlay] = useState(false);
-  let playingSong = useParams().index;
-  const [currentSong, setCurrentSong] = useState(playingSong);
+  const index = useSelector((state) => state.songs.index);
   const songs = useSelector((state) => state.songs.list);
-  console.log(songs[currentSong]);
+  useEffect(() => {
+    setIsPlay(false);
+  }, [index]);
 
   function handlePlayPause() {
     if (isPlay) {
       audioRef.current.pause();
+      setIsPlay(false);
     } else {
       audioRef.current.play();
+      setIsPlay(true);
     }
-    setIsPlay((prev) => !prev);
+    // setIsPlay((prev) => !prev);
   }
 
   function handleSkipBack() {
-    let flag = currentSong;
+    let flag = index;
     if (flag > 0) {
       flag--;
-      setCurrentSong(flag);
+      dispatch(setIndex(flag));
     } else {
-      setCurrentSong(0);
+      dispatch(setIndex(0));
     }
   }
 
   function handleSkipForward() {
-    console.log("hell");
+    let flag = index;
+    if (flag < songs.length - 1) {
+      flag++;
+    } else {
+      flag = 0;
+    }
+    dispatch(setIndex(flag));
   }
 
   return (
@@ -51,7 +60,7 @@ const Player = ({ selectedSong }) => {
         <div className="flex items-center justify-center gap-2">
           <img
             className="rounded-lg"
-            src={songs[currentSong].album.cover_xl}
+            src={songs[index].album.cover_xl}
             width={40}
             alt="imgnotfound"
           />
@@ -92,7 +101,7 @@ const Player = ({ selectedSong }) => {
       <audio
         className="hidden"
         ref={audioRef}
-        src={songs[currentSong].preview}
+        src={songs[index].preview}
         controls
       ></audio>
     </div>
