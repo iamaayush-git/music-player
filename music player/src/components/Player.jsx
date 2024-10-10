@@ -9,6 +9,7 @@ import musicGif from "../assets/musicGif.webp";
 import { useDispatch, useSelector } from "react-redux";
 import { setIndex } from "../features/songSlice";
 
+
 const Player = () => {
   const audioRef = useRef();
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const Player = () => {
   const [isPlay, setIsPlay] = useState(false);
   const [songRange, setSongRange] = useState(0);
   const [duration, setDuration] = useState(0);
-
+  const [volume, setVolume] = useState(50);
   const index = useSelector((state) => state.songs.index);
   const songs = useSelector((state) => state.songs.list);
 
@@ -75,10 +76,28 @@ const Player = () => {
 
   const handleSeek = (e) => {
     const seekTime = (e.target.value / 100) * duration;
+    console.log("seek", e.target.value);
     audioRef.current.currentTime = seekTime;
     setSongRange(e.target.value);
   };
 
+  const handleDownload = async () => {
+    try {
+      const songUrl = songs[index].preview; // Get the current song's preview URL
+      const response = await fetch(songUrl); // Fetch the audio file from the URL
+      const blob = await response.blob(); // Convert the response to a blob (binary large object)
+      const url = window.URL.createObjectURL(blob); // Create a temporary URL for the blob
+      const link = document.createElement("a"); // Create an <a> element
+      link.href = url; // Set the href to the blob URL
+      link.setAttribute("download", `song-${index}.mp3`); // Set download attribute with a file name
+      document.body.appendChild(link); // Append the link to the document body
+      link.click(); // Trigger the download
+      link.remove(); // Clean up by removing the link element
+      window.URL.revokeObjectURL(url); // Revoke the temporary URL to free up memory
+    } catch (error) {
+      console.error("Failed to download the song:", error); // Handle any errors
+    }
+  };
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-transparent text-center py-2">
       <input
@@ -121,14 +140,17 @@ const Player = () => {
           />
         </div>
         <div className="hidden md:flex items-center justify-center gap-2">
-          <FaDownload className="text-lg cursor-pointer" />
+          <FaDownload
+            onClick={handleDownload}
+            className="text-lg cursor-pointer"
+          />
           <div
             onClick={() => setShowVolumeController((prev) => !prev)}
             className="cursor-pointer"
           >
             <FaVolumeHigh className="text-lg" />
             {showVolumeController && (
-              <VolumeController className="text-lg cursor-pointer" />
+              <VolumeController volume={volume} setVolume={setVolume} audioRef={audioRef} className="text-lg cursor-pointer" />
             )}
           </div>
         </div>
