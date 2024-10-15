@@ -21,7 +21,7 @@ const Navbar = () => {
   
   return (
     <nav className="flex flex-col mt-5 items-center justify-center lg:flex-row lg:gap-4">
-      <div className="flex flex-col items-center justify-center gap-2">
+      <div className="flex flex-col items-center justify-center gap-1">
         <div className="flex items-center justify-center">
           <Link to={"/"}>
             <img
@@ -34,10 +34,8 @@ const Navbar = () => {
             <p className="font-bold mx-2 text-xl sm:text-2xl">Music</p>
           </Link>
         </div>
-        <ul className="flex items-center justify-center gap-2 text-sm sm:text-md font-semibold text-slate-600">
-          <li className="cursor-pointer">Music</li>
-          <li className="cursor-pointer">Podcasts</li>
-          <li className="cursor-pointer text-nowrap ">Go Pro</li>
+        <ul className="text-sm sm:text-md font-bold text-slate-600">
+          <Link to={"/favSong"} ><li className="cursor-pointer">My Songs</li></Link>
         </ul>
       </div>
       <div className="w-full my-3">

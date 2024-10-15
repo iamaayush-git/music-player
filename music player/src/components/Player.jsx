@@ -9,7 +9,6 @@ import musicGif from "../assets/musicGif.webp";
 import { useDispatch, useSelector } from "react-redux";
 import { setIndex } from "../features/songSlice";
 
-
 const Player = () => {
   const audioRef = useRef();
   const dispatch = useDispatch();
@@ -76,7 +75,6 @@ const Player = () => {
 
   const handleSeek = (e) => {
     const seekTime = (e.target.value / 100) * duration;
-    console.log("seek", e.target.value);
     audioRef.current.currentTime = seekTime;
     setSongRange(e.target.value);
   };
@@ -150,7 +148,12 @@ const Player = () => {
           >
             <FaVolumeHigh className="text-lg" />
             {showVolumeController && (
-              <VolumeController volume={volume} setVolume={setVolume} audioRef={audioRef} className="text-lg cursor-pointer" />
+              <VolumeController
+                volume={volume}
+                setVolume={setVolume}
+                audioRef={audioRef}
+                className="text-lg cursor-pointer"
+              />
             )}
           </div>
         </div>
