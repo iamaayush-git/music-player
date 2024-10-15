@@ -128,9 +128,15 @@ const Player = () => {
             className="text-sm md:text-lg cursor-pointer"
           />
           {isPlay ? (
-            <FaPause onClick={handlePlayPause} className="text-sm md:text-lg" />
+            <FaPause
+              onClick={handlePlayPause}
+              className="text-sm md:text-lg cursor-pointer"
+            />
           ) : (
-            <FaPlay onClick={handlePlayPause} className="text-sm md:text-lg" />
+            <FaPlay
+              onClick={handlePlayPause}
+              className="text-sm md:text-lg cursor-pointer"
+            />
           )}
           <IoPlaySkipForward
             onClick={handleSkipForward}
